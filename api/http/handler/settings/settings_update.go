@@ -7,7 +7,7 @@ import (
 	httperror "github.com/portainer/libhttp/error"
 	"github.com/portainer/libhttp/request"
 	"github.com/portainer/libhttp/response"
-	"github.com/portainer/portainer/api"
+	portainer "github.com/portainer/portainer/api"
 	"github.com/portainer/portainer/api/filesystem"
 )
 
@@ -25,6 +25,7 @@ type settingsUpdatePayload struct {
 	TemplatesURL                       *string
 	EdgeAgentCheckinInterval           *int
 	EnableEdgeComputeFeatures          *bool
+	EnableHostNamespaceUse             *bool
 }
 
 func (payload *settingsUpdatePayload) Validate(r *http.Request) error {
@@ -112,6 +113,10 @@ func (handler *Handler) settingsUpdate(w http.ResponseWriter, r *http.Request) *
 
 	if payload.EnableEdgeComputeFeatures != nil {
 		settings.EnableEdgeComputeFeatures = *payload.EnableEdgeComputeFeatures
+	}
+
+	if payload.EnableHostNamespaceUse != nil {
+		settings.EnableHostNamespaceUse = *payload.EnableHostNamespaceUse
 	}
 
 	if payload.SnapshotInterval != nil && *payload.SnapshotInterval != settings.SnapshotInterval {

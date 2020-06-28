@@ -6,7 +6,7 @@ import (
 
 	httperror "github.com/portainer/libhttp/error"
 	"github.com/portainer/libhttp/response"
-	"github.com/portainer/portainer/api"
+	portainer "github.com/portainer/portainer/api"
 )
 
 type publicSettingsResponse struct {
@@ -17,6 +17,7 @@ type publicSettingsResponse struct {
 	AllowVolumeBrowserForRegularUsers  bool                           `json:"AllowVolumeBrowserForRegularUsers"`
 	EnableHostManagementFeatures       bool                           `json:"EnableHostManagementFeatures"`
 	EnableEdgeComputeFeatures          bool                           `json:"EnableEdgeComputeFeatures"`
+	EnableHostNamespaceUse             bool                           `json:"EnableHostNamespaceUse"`
 	ExternalTemplates                  bool                           `json:"ExternalTemplates"`
 	OAuthLoginURI                      string                         `json:"OAuthLoginURI"`
 }
@@ -36,6 +37,7 @@ func (handler *Handler) settingsPublic(w http.ResponseWriter, r *http.Request) *
 		AllowVolumeBrowserForRegularUsers:  settings.AllowVolumeBrowserForRegularUsers,
 		EnableHostManagementFeatures:       settings.EnableHostManagementFeatures,
 		EnableEdgeComputeFeatures:          settings.EnableEdgeComputeFeatures,
+		EnableHostNamespaceUse:             settings.EnableHostNamespaceUse,
 		ExternalTemplates:                  false,
 		OAuthLoginURI: fmt.Sprintf("%s?response_type=code&client_id=%s&redirect_uri=%s&scope=%s&prompt=login",
 			settings.OAuthSettings.AuthorizationURI,
